@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, Task!</string>
+    <string name="app_name">Location Task</string>
+    <string name="add_task">Add Task</string>
+    <string name="tasks">Tasks</string>
+	<string name="tasks_records">Tasks Records</string>
+	<string name="next">Next</string>
+	<string name="print">Well Done!</string>
+	<string name="date">Date</string>
+	<string name="time">Time</string>
+	<color name="white">#ffffff</color>
+	<color name="text_color">#31D1F1</color>
+</resources>
