@@ -30,8 +30,11 @@ public class time_date extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.time_date);
 		
+		cal_obj = Calendar.getInstance();
+		newIntent(getIntent());
+		
 		items = new ArrayList<String>();		
-		Log.i(tag, "Process is in time_date class!!!");
+		//Log.i(tag, "Process is in time_date class!!!");// debugging
 		adapter = new CalendarAdapter(this, cal_obj);
 		
 		GridView gView = (GridView) findViewById(R.id.gridview);
@@ -92,17 +95,18 @@ gView.setOnItemClickListener(new OnItemClickListener() {
         
     }
 });
-		
+				
+	}
+	public void newIntent(Intent intent){
 		String year_cal = getIntent().getExtras().get("year").toString();
 		String month_cal = getIntent().getExtras().get("month").toString();
 		String day_cal = getIntent().getExtras().get("day").toString();
-		Log.i(tag, "In time_date.java.."+year_cal+"-"+month_cal+"-"+day_cal);
 		
+		Log.i(tag, "In time_date.java.."+year_cal+"-"+month_cal+"-"+day_cal);
 		// assigning present date to Calendar object
 		cal_obj.set(Integer.parseInt(year_cal), Integer.parseInt(month_cal), Integer.parseInt(day_cal));
-		
-		
 	}
+	
 	public void refreshCalendar()
 	{
 		TextView title  = (TextView) findViewById(R.id.title);

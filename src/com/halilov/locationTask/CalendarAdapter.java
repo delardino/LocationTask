@@ -27,10 +27,11 @@ public class CalendarAdapter extends BaseAdapter{
 	// construct CalendarAdapter class
 	public CalendarAdapter(Context c, Calendar cal){
 	Log.i(tag, "inside CalendarAdapter constructor!!");// debugging
-	    
+	
 		// debugging purpose
-		//int year = cal.get(Calendar.YEAR);
-		Log.i(tag, "The year is: ");
+		int year = cal.get(Calendar.YEAR);
+		Log.i(tag, "The year is: "+year+" - date assign is successful!");
+	
 	
 	cal_obj = cal;
 	selectedDate = (Calendar)cal.clone();
@@ -39,6 +40,7 @@ public class CalendarAdapter extends BaseAdapter{
 	this.items = new ArrayList<String>();
 	Log.i(tag, "still inside CalendarAdapter constructor!!");// debugging
 	refreshDays();
+	Log.i(tag, "refresh() works!");
 	}
 	
 	public void setItems(ArrayList<String> items) {
@@ -112,36 +114,43 @@ public class CalendarAdapter extends BaseAdapter{
         return v;
     }
 	
-	public void refreshDays(){
-		items.clear();
-		
-		// gives how many days in an actual date (ex. February = 28)
-		int lastDay = cal_obj.getActualMaximum(Calendar.DAY_OF_MONTH);
-		// gives the first day of the week (ex. 0 - Sunday, 1 - Monday)
-		int firstDay = (int)cal_obj.get(Calendar.DAY_OF_WEEK);
-		
-		if(firstDay == 1){
-			days = new String[lastDay+(FIRST_DAY_OF_WEEK*6)]; 
-			}
-		else
-		{
-			days = new String[lastDay+firstDay-(FIRST_DAY_OF_WEEK+1)];
-		}
-		
-		int i = FIRST_DAY_OF_WEEK;
-		// create empty days first
-		if(firstDay > 1){
-			for(i=0;i<firstDay-FIRST_DAY_OF_WEEK;i++){
-				days[i]= "";
-			}
-			i = FIRST_DAY_OF_WEEK*6-1;
-			}
-		// populate days
-		int dayNumber = 1;
-		for(int j=i-1;j<days.length;j++){
-			days[j]=""+dayNumber;
-			dayNumber++;
-		}
+    public void refreshDays()
+    {
+    	// clear items
+    	items.clear();
+    	
+    	int lastDay = cal_obj.getActualMaximum(Calendar.DAY_OF_MONTH);
+        int firstDay = (int)cal_obj.get(Calendar.DAY_OF_WEEK);
+        
+        // figure size of the array
+        if(firstDay==1){
+        	days = new String[lastDay+(FIRST_DAY_OF_WEEK*6)];
+        }
+        else {
+        	days = new String[lastDay+firstDay-(FIRST_DAY_OF_WEEK+1)];
+        }
+        
+        int j=FIRST_DAY_OF_WEEK;
+        
+        // populate empty days before first real day
+        if(firstDay>1) {
+	        for(j=0;j<firstDay-FIRST_DAY_OF_WEEK;j++) {
+	        	days[j] = "";
+	        }
+        }
+	    else {
+	    	for(j=0;j<FIRST_DAY_OF_WEEK*6;j++) {
+	        	days[j] = "";
+	        }
+	    	j=FIRST_DAY_OF_WEEK*6+1; // sunday => 1, monday => 7
+	    }
+        
+        // populate days
+        int dayNumber = 1;
+        for(int i=j-1;i<days.length;i++) {
+        	days[i] = ""+dayNumber;
+        	dayNumber++;
+        }
 	}
 	
 		String [] days;
